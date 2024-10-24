@@ -9,6 +9,7 @@ const MarkdownDisplay = ({ text }: { text: string }) => {
       // Check for numbered lists (e.g., "1. ", "2. ")
       const numberedListMatch = line.match(/^(\d+)\.\s+(.+)/);
       if (numberedListMatch) {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const [_, number, content] = numberedListMatch;
         return processLine(content, lineIndex, true, number);
       }
