@@ -11,6 +11,9 @@ export default function page() {
       <Button asChild>
         <Link href={"/chat-conv"}>Chat conversation AI</Link>
       </Button>
+      <Button asChild>
+        <Link href={"/text-to-image"}>Image Generator</Link>
+      </Button>
     </div>
   )
 }
