@@ -128,12 +128,13 @@ export default function Page() {
         {messages.map((message, index) => (
           <div
             key={index}
-            className={`my-2 p-4 rounded-md max-w-md ${
+            className={`my-2 p-4 rounded-xl max-w-md ${
               message.role === "user"
                 ? "ml-auto bg-blue-500 text-white text-right"
                 : "mr-auto bg-gray-200 text-black text-left"
             }`}
           >
+            
             <h1 className="font-bold">{message.role}</h1>
             <MarkdownDisplay text={message.content} />
           </div>
