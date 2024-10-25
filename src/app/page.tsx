@@ -14,6 +14,12 @@ export default function page() {
       <Button asChild>
         <Link href={"/text-to-image"}>Image Generator</Link>
       </Button>
+      <Button asChild>
+        <Link href={"/image-to-text"}>Image to text</Link>
+      </Button>
+      <Button asChild>
+        <Link href={"/image-classification"}>Image Classification</Link>
+      </Button>
     </div>
   )
 }
