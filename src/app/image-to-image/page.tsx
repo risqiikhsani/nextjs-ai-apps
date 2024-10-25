@@ -1,43 +1,66 @@
 "use client";
-import React, { useState } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useDropzone } from "react-dropzone";
-import { z } from "zod";
-import { Input } from "@/components/ui/input";
+import SpinnerAI2 from "@/components/spinner-ai-2";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
+  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { UploadCloudIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Progress } from "@/components/ui/progress";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { UploadCloudIcon } from "lucide-react";
 import Image from "next/image";
-import SpinnerAI2 from "@/components/spinner-ai-2";
+import React, { useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+
 
 const formSchema = z.object({
   image: z
     //Rest of validations done via react dropzone
     .instanceof(File)
     .refine((file) => file.size !== 0, "Please upload an image"),
+  text: z.string().optional(),
+  model: z.string().optional(),
 });
+
+// Function to convert Blob to Base64
+function blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onloadend = () => resolve(reader.result as string);
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+}
 
 export default function Page() {
   const { toast } = useToast();
   const [preview, setPreview] = useState<string | ArrayBuffer | null>("");
   const [isLoading, setIsLoading] = useState(false);
-  const [result, setResult] = useState<{ label: string; score: number }[]>([]);
+  const [generatedImage, setGeneratedImage] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     mode: "onBlur",
     defaultValues: {
       image: new File([""], "filename"),
+      text: "",
+      model:"lllyasviel/sd-controlnet-depth"
     },
   });
 
@@ -88,20 +111,26 @@ export default function Page() {
         reader.readAsDataURL(values.image);
       });
 
-      const response = await fetch("/api/image-classification", {
+      const response = await fetch("/api/image-to-image", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ image: imageBase64.split(",")[1] }), // Remove the data URL prefix
+        body: JSON.stringify({ 
+          image: imageBase64.split(",")[1],
+          text:values.text ,
+          model:values.model
+        }), // Remove the data URL prefix
       });
 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
 
-      const data = await response.json();
-      setResult(data.imageResponse);
+      // Get the Blob from the response
+      const blob = await response.blob();
+      const base64Image = await blobToBase64(blob); // Convert Blob to Base64
+      setGeneratedImage(base64Image); // Set the Base64 string to the state
 
       toast({
         title: "Image Classification",
@@ -131,6 +160,33 @@ export default function Page() {
     <div className="py-10 flex">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
+        <FormField
+          control={form.control}
+          name="model"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Model</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select a verified model to display" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="lllyasviel/sd-controlnet-depth">lllyasviel/sd-controlnet-depth</SelectItem>
+                  <SelectItem value="stabilityai/stable-diffusion-xl-refiner-1.0">stabilityai/stable-diffusion-xl-refiner-1.0</SelectItem>
+                  <SelectItem value="alimama-creative/FLUX.1-dev-Controlnet-Inpainting-Beta">alimama-creative/FLUX.1-dev-Controlnet-Inpainting-Beta</SelectItem>
+                  <SelectItem value="jasperai/Flux.1-dev-Controlnet-Upscaler">jasperai/Flux.1-dev-Controlnet-Upscaler</SelectItem>
+                  <SelectItem value="enhanceaiteam/Flux-Uncensored-V2">enhanceaiteam/Flux-Uncensored-V2</SelectItem>
+                </SelectContent>
+              </Select>
+              <FormDescription>
+                Select the model
+              </FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
           <FormField
             control={form.control}
             name="image"
@@ -188,7 +244,23 @@ export default function Page() {
               </FormItem>
             )}
           />
-
+          <FormField
+            control={form.control}
+            name="text"
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Prompt</FormLabel>
+                <FormControl>
+                  <Textarea
+                    placeholder="Type your prompt"
+                    className="resize-none"
+                    {...field}
+                  />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <Button type="submit" disabled={form.formState.isSubmitting}>
             Submit
           </Button>
@@ -198,21 +270,19 @@ export default function Page() {
         Clear image
       </Button> */}
       <div className="mx-6">
-      <h3 className="text-lg font-semibold">Classification Results</h3>
-      {isLoading && <p>Wait, Progress to classify image ...</p>}
+      <h3 className="text-lg font-semibold">Image Result</h3>
+      {isLoading && <p>Wait, Progress to generate image from image ...</p>}
       {isLoading && <SpinnerAI2/>}
       {/* Render result as progress bars */}
-      {result.length > 0 && (
-        <div>
-
-          {result.map(({ label, score }, index) => (
-            <div key={index} className="space-y-2">
-              <p className="font-bold text-sky-500">
-                {label} - {Math.round(score * 100)}%
-              </p>
-              <Progress value={score * 100} />
-            </div>
-          ))}
+      {generatedImage && (
+        <div className="pt-2">
+          <Image
+            src={generatedImage}
+            alt="Generated"
+            className="rounded-lg"
+            height={500}
+            width={500}
+          />
         </div>
       )}
       </div>

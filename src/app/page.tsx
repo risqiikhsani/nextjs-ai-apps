@@ -20,6 +20,9 @@ export default function page() {
       <Button asChild>
         <Link href={"/image-classification"}>Image Classification</Link>
       </Button>
+      <Button asChild>
+        <Link href={"/image-to-image"}>Image To Image</Link>
+      </Button>
     </div>
   )
 }

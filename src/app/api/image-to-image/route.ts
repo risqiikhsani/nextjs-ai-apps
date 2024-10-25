@@ -4,11 +4,18 @@ import { NextResponse } from "next/server";
 const HF_TOKEN = process.env.HF_TOKEN;
 const inference = new HfInference(HF_TOKEN);
 
-async function getImageClassification({ model, image }: { model?: string; image: Buffer }) {
+function bufferToBlob(buffer: Buffer, type: string = "image/png"): Blob {
+  return new Blob([buffer], { type });
+}
+
+async function getImageToImage({ model, image, text }: { model?: string; image: Buffer, text?:string }) {
   try {
-    const out = await inference.imageToText({
-      model: model || "Salesforce/blip-image-captioning-large",
-      data: image,  // Passing the image as a buffer
+    const out = await inference.imageToImage({
+      model: model || "lllyasviel/sd-controlnet-depth",
+      inputs: bufferToBlob(image), 
+      parameters:{
+        prompt:text || "",
+      } 
     });
     console.log(out);
     return out;
@@ -22,7 +29,7 @@ export async function POST(req: Request) {
   try {
     // Parse the request body
     const body = await req.json();
-    const { model, image } = body;
+    const { model, image, text } = body;
 
     if (!image) {
       return NextResponse.json({ error: "Image is required" }, { status: 400 });
@@ -32,10 +39,14 @@ export async function POST(req: Request) {
     const imageBuffer = Buffer.from(image, "base64");
 
     // Get the image classification result
-    const imageResponse = await getImageClassification({ model, image: imageBuffer });
+    const imageResponse = await getImageToImage({ model, image: imageBuffer, text });
 
-    // Return the classification result
-    return NextResponse.json({ imageResponse });
+    // Send the Blob directly (this will return as binary data)
+    return new Response(imageResponse, {
+      headers: {
+        "Content-Type": "image/jpeg", // Adjust based on the actual image type
+      },
+    });
   } catch (error) {
     console.error("API route error:", error);
     return NextResponse.json(
