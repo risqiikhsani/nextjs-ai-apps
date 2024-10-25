@@ -25,6 +25,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import Image from "next/image";
+import SpinnerAI2 from "@/components/spinner-ai-2";
 
 const FormSchema = z.object({
   text: z
@@ -102,7 +103,7 @@ export default function Page() {
   }
 
   return (
-    <div>
+    <div className="flex py-10">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -113,7 +114,7 @@ export default function Page() {
             name="model"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>model</FormLabel>
+                <FormLabel>Model</FormLabel>
                 <Select
                   onValueChange={field.onChange}
                   defaultValue={field.value}
@@ -144,7 +145,7 @@ export default function Page() {
             name="text"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>text</FormLabel>
+                <FormLabel>Prompt</FormLabel>
                 <FormControl>
                   <Textarea
                     placeholder="Type your image here"
@@ -162,8 +163,10 @@ export default function Page() {
         </form>
       </Form>
 
+      <div className="mx-6">
+      <h3 className="text-lg font-semibold">Image Result</h3>
       {isLoading && <p>{`Wait, generating image using model ${form.getValues("model")} is running...`}</p>}
-
+      {isLoading && <SpinnerAI2/>}
       {generatedImage && (
         <div className="mt-6">
           <Image
@@ -175,6 +178,8 @@ export default function Page() {
           />
         </div>
       )}
+      </div>
+      
     </div>
   );
 }

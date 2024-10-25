@@ -6,13 +6,14 @@ import {
   SidebarGroup,
   SidebarGroupContent,
   SidebarGroupLabel,
+  SidebarHeader,
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
 // Menu items.
-const items = [
+const text_items = [
   {
     title: "Chat Basic",
     url: "/chat",
@@ -23,6 +24,19 @@ const items = [
     url: "/chat-conv",
     icon: Inbox,
   },
+  {
+    title: "Text Summarization",
+    url: "/summarization",
+    icon: Inbox,
+  },
+  {
+    title: "Text Classification",
+    url: "/text-classification",
+    icon: Inbox,
+  },
+]
+
+const visual_items = [
   {
     title: "Image Generator",
     url: "/text-to-image",
@@ -48,12 +62,32 @@ const items = [
 export function AppSidebar() {
   return (
     <Sidebar>
+      <SidebarHeader>
+        HypernovaAI
+      </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel>Application</SidebarGroupLabel>
+          <SidebarGroupLabel>Natural Language Processing</SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {items.map((item) => (
+              {text_items.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <a href={item.url}>
+                      <item.icon />
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Computer Vision</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {visual_items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
