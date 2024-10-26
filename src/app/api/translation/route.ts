@@ -17,10 +17,7 @@ async function getTranslation({
     const out = await inference.translation({
       model: "facebook/mbart-large-50-many-to-many-mmt",
       inputs: text,
-      parameters: {
-        "src_lang": "en_XX",
-        "tgt_lang": "fr_XX"
-       }
+      
     });
 
     return out;

@@ -61,3 +61,13 @@ export const visual_items = [
     description: "Transform images into stylized illustrations, blending creativity and technology to redefine your visuals.",
   },
 ];
+
+export const audio_items=[
+    {
+        title: "Text to speech",
+        url: "/text-to-speech",
+        icon: Cpu,
+        image: '/icons/voice.png',
+        description: "Convert your text to speech.",
+      },
+]

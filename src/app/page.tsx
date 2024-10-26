@@ -9,7 +9,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { text_items, visual_items } from "@/const/links";
+import { audio_items, text_items, visual_items } from "@/const/links";
 import Image from "next/image";
 
 export default function Page() {
@@ -49,6 +49,34 @@ export default function Page() {
 
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
         {visual_items.map((item, index) => (
+          <Card
+            key={index}
+            className="w-full transform transition duration-300 hover:scale-105 border-2 border-transparent hover:border-blue-500 hover:shadow-lg rounded-lg"
+          >
+            <CardHeader>
+              <CardTitle className="text-xl font-semibold text-blue-700">{item.title}</CardTitle>
+              <CardDescription className="text-gray-600">{item.description}</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <Image
+                src={item.image}
+                height={300}
+                width={500}
+                alt="image"
+                className="rounded-md"
+              />
+            </CardContent>
+            <CardFooter>
+              <Link href={item.url}>
+                <Button className="hover:bg-blue-500 hover:text-white transition duration-200 ease-in-out">Learn More</Button>
+              </Link>
+            </CardFooter>
+          </Card>
+        ))}
+      </div>
+
+      <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
+        {audio_items.map((item, index) => (
           <Card
             key={index}
             className="w-full transform transition duration-300 hover:scale-105 border-2 border-transparent hover:border-blue-500 hover:shadow-lg rounded-lg"

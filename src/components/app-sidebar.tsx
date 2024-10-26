@@ -10,7 +10,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { text_items, visual_items } from "@/const/links"
+import { audio_items, text_items, visual_items } from "@/const/links"
 
 export function AppSidebar() {
   return (
@@ -41,6 +41,23 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {visual_items.map((item) => (
+                <SidebarMenuItem key={item.title}>
+                  <SidebarMenuButton asChild>
+                    <a href={item.url}>
+                      <item.icon className="text-cyan-500"/>
+                      <span>{item.title}</span>
+                    </a>
+                  </SidebarMenuButton>
+                </SidebarMenuItem>
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Audio</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {audio_items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
                     <a href={item.url}>
