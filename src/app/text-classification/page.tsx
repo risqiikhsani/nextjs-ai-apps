@@ -85,7 +85,7 @@ export default function Page() {
   }
 
   return (
-    <div>
+    <div className="flex gap-4">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -113,6 +113,7 @@ export default function Page() {
           </Button>
         </form>
       </Form>
+      <div>
       <h3 className="text-lg font-semibold">Classification Result</h3>
       {result.length > 0 ? (
         <div>
@@ -128,6 +129,8 @@ export default function Page() {
       ) : (
         <p>No results to display</p>
       )}
+      </div>
+      
     </div>
   );
 }
