@@ -84,7 +84,7 @@ export default function Page() {
   }
 
   return (
-    <div>
+    <div className="py-10 grid grid-cols-2 gap-4 border-2 rounded-xl p-4">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
         <FormField

@@ -75,6 +75,8 @@ export default function Page() {
         ))}
       </div>
 
+      <h1 className="text-4xl font-bold mt-16 mb-8 text-blue-600">Audio</h1>
+
       <div className="grid grid-cols-1 sm:grid-cols-4 gap-6">
         {audio_items.map((item, index) => (
           <Card

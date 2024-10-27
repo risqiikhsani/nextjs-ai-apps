@@ -103,7 +103,7 @@ export default function Page() {
   }
 
   return (
-    <div className="flex py-10">
+    <div className="py-10 grid grid-cols-2 gap-4 border-2 rounded-xl p-4">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}

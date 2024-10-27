@@ -11,12 +11,15 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { audio_items, text_items, visual_items } from "@/const/links"
+import Link from "next/link"
 
 export function AppSidebar() {
   return (
     <Sidebar>
       <SidebarHeader>
-        HypernovaAI
+        <SidebarMenuButton asChild>
+          <Link href="/">HypernovaAI</Link>
+        </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>
         <SidebarGroup>

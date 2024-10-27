@@ -16,6 +16,7 @@ import {
 import { Textarea } from "@/components/ui/textarea"
 import { useState } from "react"
 import MarkdownDisplay from "@/components/MarkdownDisplay"
+import SpinnerAI2 from "@/components/spinner-ai-2"
 
 const FormSchema = z.object({
   message: z
@@ -85,7 +86,7 @@ export default function Page() {
   }
 
   return (
-    <div>
+    <div className="py-10 grid grid-cols-2 gap-4 border-2 rounded-xl p-4">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
         <FormField
@@ -113,7 +114,14 @@ export default function Page() {
         </Button>
       </form>
     </Form>
-    <MarkdownDisplay text={result}/>
+
+    <div className="mx-6">
+      <h3 className="text-lg font-semibold">Result</h3>
+      {isLoading && <p>Wait, Progress to generate text ...</p>}
+      {isLoading && <SpinnerAI2/>}
+      {/* Render result as progress bars */}
+      <MarkdownDisplay text={result}/>
+      </div>
     </div>
 
   )
