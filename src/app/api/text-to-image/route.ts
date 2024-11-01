@@ -1,3 +1,5 @@
+export const maxDuration = 60;
+
 import { HfInference } from "@huggingface/inference";
 import { NextResponse } from "next/server";
 
