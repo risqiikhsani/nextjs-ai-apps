@@ -18,14 +18,14 @@ const ObjectDetection = ({
     .slice(0, 5);
 
   // Handle image load to get actual displayed dimensions
-  const handleImageLoad = ({ target }) => {
+  const handleImageLoad = () => {
     if (containerRef.current) {
       const { width, height } = containerRef.current.getBoundingClientRect();
       setDimensions({ width, height });
     }
   };
 
-  const calculateScaledPosition = (value, originalSize, newSize, isX = true) => {
+  const calculateScaledPosition = (value, originalSize, newSize) => {
     const scale = newSize / originalSize;
     return value * scale;
   };

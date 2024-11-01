@@ -1,3 +1,4 @@
+
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -51,6 +52,7 @@ const ObjectDetectionComponent = () => {
         cancelAnimationFrame(animationFrameId);
       }
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const displayVideoDetections = useCallback((result: ObjectDetectorResult) => {
