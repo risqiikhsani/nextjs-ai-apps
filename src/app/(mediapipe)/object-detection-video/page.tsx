@@ -1,18 +1,16 @@
 "use client";
 
-import React, { useEffect, useRef, useState, useCallback } from "react";
-import Webcam from "react-webcam";
-import {
-  ObjectDetector,
-  FilesetResolver,
-  Detection,
-  ObjectDetectorResult,
-} from "@mediapipe/tasks-vision";
 import { Button } from "@/components/ui/button";
+import {
+    FilesetResolver,
+    ObjectDetector,
+    ObjectDetectorResult
+} from "@mediapipe/tasks-vision";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Webcam from "react-webcam";
 
 const ObjectDetectionComponent = () => {
   const webcamRef = useRef<Webcam>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [objectDetector, setObjectDetector] = useState<ObjectDetector | null>(
     null
   );
@@ -58,9 +56,11 @@ const ObjectDetectionComponent = () => {
   const displayVideoDetections = useCallback((result: ObjectDetectorResult) => {
     if (!detectionDivRef.current || !webcamRef.current?.video) return;
 
-    // Remove previous detections
+    // Clear previous detections if they still exist
     childrenRef.current.forEach((child) => {
-      detectionDivRef.current?.removeChild(child);
+      if (detectionDivRef.current?.contains(child)) {
+        detectionDivRef.current?.removeChild(child);
+      }
     });
     childrenRef.current = [];
 
@@ -72,7 +72,8 @@ const ObjectDetectionComponent = () => {
       detectionDiv.offsetHeight / videoHeight
     );
 
-    result.detections.forEach((detection) => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    result.detections.forEach((detection: any | null) => {
       // Create label
       const label = document.createElement("div");
       label.className =
@@ -138,6 +139,7 @@ const ObjectDetectionComponent = () => {
       }
     }
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     animationFrameId = requestAnimationFrame(predictWebcam);
   }, [objectDetector, isWebcamActive, displayVideoDetections]);
 
@@ -165,7 +167,8 @@ const ObjectDetectionComponent = () => {
     }
 
     return () => {
-      if (webcamRef.current?.video) {
+      if (isWebcamActive && webcamRef.current?.video) {
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         webcamRef.current.video.removeEventListener(
           "loadeddata",
           predictWebcam
@@ -201,7 +204,6 @@ const ObjectDetectionComponent = () => {
               <Webcam
                 ref={webcamRef}
                 className="w-full rounded-lg"
-                
                 screenshotFormat="image/jpeg"
                 videoConstraints={{
                   width: 640,
