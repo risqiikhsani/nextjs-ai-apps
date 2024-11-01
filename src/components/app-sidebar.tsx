@@ -18,7 +18,7 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarHeader>
         <SidebarMenuButton asChild>
-          <Link href="/">HypernovaAI</Link>
+          <Link href="/">Hypernova AI</Link>
         </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>
