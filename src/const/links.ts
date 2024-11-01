@@ -77,8 +77,17 @@ export const visual_items = [
       "Identify objects, scenes, and other elements within images, providing detailed classification to enrich your data insights.",
   },
   {
-    title: "Object Detection",
+    title: "Object Detection Image",
     url: "/object-detection",
+    icon: Cpu,
+    image: "/icons/gpu.png",
+    type:"mediapipe",
+    description:
+      "Identify objects, scenes, and other elements within images, providing detailed classification to enrich your data insights.",
+  },
+  {
+    title: "Object Detection Video",
+    url: "/object-detection-video",
     icon: Cpu,
     image: "/icons/gpu.png",
     type:"mediapipe",

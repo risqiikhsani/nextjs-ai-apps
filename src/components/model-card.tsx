@@ -22,7 +22,7 @@ export default function ModelCard({ item }: { item: LinkType }) {
         <CardTitle className="text-xl font-semibold text-blue-700">
           {item.title}
         </CardTitle>
-        <Badge variant="outline" className="bg-orange-500">{item.type}</Badge>
+        <Badge variant="outline" className="bg-orange-500 rounded-2xl">{item.type}</Badge>
         </div>
         
         <CardDescription className="text-gray-600">

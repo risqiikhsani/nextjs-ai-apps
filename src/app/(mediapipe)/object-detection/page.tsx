@@ -1,5 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Webcam from "react-webcam";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useDropzone } from "react-dropzone";
@@ -18,7 +19,7 @@ import { UploadCloudIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import Image from "next/image";
 import SpinnerAI2 from "@/components/spinner-ai-2";
-import { ObjectDetector, FilesetResolver } from '@mediapipe/tasks-vision';
+import { ObjectDetector, FilesetResolver } from "@mediapipe/tasks-vision";
 import ObjectDetection from "./object-detection";
 
 const formSchema = z.object({
@@ -33,6 +34,8 @@ export default function Page() {
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState([]);
   const [model, setModel] = useState<unknown>(null);
+
+
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -50,10 +53,17 @@ export default function Page() {
           "https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.0/wasm"
         );
 
-        const classifier = await ObjectDetector.createFromModelPath(
-          vision,
-          "/models/efficientdet_lite0.tflite"
-        );
+        // const classifier = await ObjectDetector.createFromModelPath(
+        //   vision,
+        //   "/models/efficientdet_lite0.tflite"
+        // );
+        const classifier = await ObjectDetector.createFromOptions(vision, {
+          baseOptions: {
+            modelAssetPath: "/models/efficientdet_lite0.tflite",
+          },
+          scoreThreshold: 0.5,
+          runningMode: "IMAGE",
+        });
         setModel(classifier);
       } catch (error) {
         console.error("Error initializing classifier:", error);
@@ -90,12 +100,13 @@ export default function Page() {
     [form, toast]
   );
 
-  const { getRootProps, getInputProps, isDragActive, fileRejections } = useDropzone({
-    onDrop,
-    maxFiles: 1,
-    maxSize: 5000000,
-    accept: { "image/png": [], "image/jpg": [], "image/jpeg": [] },
-  });
+  const { getRootProps, getInputProps, isDragActive, fileRejections } =
+    useDropzone({
+      onDrop,
+      maxFiles: 1,
+      maxSize: 5000000,
+      accept: { "image/png": [], "image/jpg": [], "image/jpeg": [] },
+    });
 
   // // Helper function to extract top predictions
   // function getTopPredictions(predictions, limit = 5) {
@@ -122,9 +133,9 @@ export default function Page() {
     setIsLoading(true);
     try {
       // Create an HTML image element from the file
-      const img = document.createElement('img');
+      const img = document.createElement("img");
       const imageUrl = URL.createObjectURL(imageFile);
-      
+
       await new Promise((resolve, reject) => {
         img.onload = resolve;
         img.onerror = reject;
@@ -135,7 +146,7 @@ export default function Page() {
       console.log("Predictions:", predictions);
       // const topPredictions = getTopPredictions(predictions);
       setResult(predictions.detections);
-      
+
       // if (topPredictions.length > 0) {
       //   toast({
       //     title: "Image Classification",
@@ -167,13 +178,20 @@ export default function Page() {
   return (
     <div className="py-10 grid grid-cols-2 gap-4 border-2 rounded-xl p-4">
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
+        <form
+          onSubmit={form.handleSubmit(onSubmit)}
+          className="flex flex-col gap-6"
+        >
           <FormField
             control={form.control}
             name="image"
             render={() => (
               <FormItem>
-                <FormLabel className={`${fileRejections.length !== 0 && "text-destructive"}`}>
+                <FormLabel
+                  className={`${
+                    fileRejections.length !== 0 && "text-destructive"
+                  }`}
+                >
                   <h2 className="text-lg font-semibold">Upload your image</h2>
                 </FormLabel>
                 <FormControl>
@@ -190,20 +208,34 @@ export default function Page() {
                         width={500}
                       />
                     )}
-                    <UploadCloudIcon className={`size-10 ${preview ? "hidden" : "block"}`} />
+                    <UploadCloudIcon
+                      className={`size-10 ${preview ? "hidden" : "block"}`}
+                    />
                     <Input {...getInputProps()} type="file" />
-                    {isDragActive ? <p>Drop the image!</p> : <p>Click here or drag an image to upload it</p>}
+                    {isDragActive ? (
+                      <p>Drop the image!</p>
+                    ) : (
+                      <p>Click here or drag an image to upload it</p>
+                    )}
                   </div>
                 </FormControl>
                 <FormMessage>
                   {fileRejections.length !== 0 && (
-                    <p>Image must be less than 5MB and of type png, jpg, or jpeg</p>
+                    <p>
+                      Image must be less than 5MB and of type png, jpg, or jpeg
+                    </p>
                   )}
                 </FormMessage>
               </FormItem>
             )}
           />
-          <Button type="submit" disabled={form.formState.isSubmitting || isLoading}>Submit</Button>
+
+          <Button
+            type="submit"
+            disabled={form.formState.isSubmitting || isLoading}
+          >
+            Submit
+          </Button>
         </form>
       </Form>
       <div className="mx-6">
@@ -225,7 +257,9 @@ export default function Page() {
           </div>
         )} */}
         {/* {JSON.stringify(result)} */}
-        <ObjectDetection imageSrc={preview as string} detections={result}/>
+        {result && preview && (
+          <ObjectDetection imageSrc={preview as string} detections={result} />
+        )}
       </div>
     </div>
   );
