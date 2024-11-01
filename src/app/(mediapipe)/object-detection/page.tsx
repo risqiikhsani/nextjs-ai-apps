@@ -32,7 +32,8 @@ export default function Page() {
   const [preview, setPreview] = useState<string | ArrayBuffer | null>("");
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState([]);
-  const [model, setModel] = useState<unknown>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [model, setModel] = useState<any>(null);
 
 
 
