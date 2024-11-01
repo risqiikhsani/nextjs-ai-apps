@@ -32,7 +32,8 @@ export default function Page() {
   const [preview, setPreview] = useState<string | ArrayBuffer | null>("");
   const [isLoading, setIsLoading] = useState(false);
   const [result, setResult] = useState<{ categoryName: string; score: number }[]>([]);
-  const [imageClassifier, setImageClassifier] = useState<unknown>(null);
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const [imageClassifier, setImageClassifier] = useState<any>(null);
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
