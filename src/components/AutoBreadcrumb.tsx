@@ -1,3 +1,4 @@
+
 "use client"
 
 import React from 'react';
@@ -22,7 +23,8 @@ import { ChevronRight, MoreHorizontal } from "lucide-react";
 const AutoBreadcrumb = () => {
   const pathname = usePathname();
   const [showEllipsis, setShowEllipsis] = React.useState(false);
-  const containerRef = React.useRef(null);
+  const containerRef = React.useRef<HTMLDivElement>(null); // Explicitly type as HTMLDivElement
+
 
   // Generate breadcrumb items from pathname
   const getPathSegments = () => {
