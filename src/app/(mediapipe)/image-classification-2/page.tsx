@@ -98,7 +98,8 @@ export default function Page() {
   });
 
   // Helper function to extract top predictions
-  function getTopPredictions(predictions, limit = 5) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  function getTopPredictions(predictions: { classifications: { categories: any[]; }[]; }, limit = 5) {
     if (!predictions?.classifications?.[0]?.categories) {
       return [];
     }
