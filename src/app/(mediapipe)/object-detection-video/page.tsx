@@ -178,7 +178,7 @@ const ObjectDetectionComponent = () => {
   }, [isWebcamActive, handleWebcamLoad, predictWebcam]);
 
   return (
-    <div className="py-10 grid grid-cols-2 gap-4 border-2 rounded-xl p-4">
+    <div className="py-10  border-2 rounded-xl p-4">
       {isLoading ? (
         <div className="text-center py-4">Loading object detector...</div>
       ) : (

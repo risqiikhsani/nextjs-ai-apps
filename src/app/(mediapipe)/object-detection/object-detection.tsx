@@ -1,3 +1,4 @@
+
 import React, { useRef, useState } from 'react';
 import Image from 'next/image';
 
@@ -38,10 +39,12 @@ const ObjectDetection = ({
       <Image
         src={imageSrc}
         alt="Detected Objects"
-        fill
+        
         style={{ objectFit: 'contain' }}
         onLoadingComplete={handleImageLoad}
-        sizes="500px"
+        height={500}
+        width={500}
+        className='rounded-xl'
       />
       
       {dimensions.width > 0 && filteredDetections.map((detection, index) => {
@@ -57,7 +60,7 @@ const ObjectDetection = ({
         return (
           <div
             key={index}
-            className="absolute border-2 border-red-500 bg-transparent"
+            className="absolute border-2 border-red-500 bg-transparent hover:bg-sky-500 hover:bg-opacity-20 rounded-xl"
             style={{
               left: `${scaledX}px`,
               top: `${scaledY}px`,

@@ -1,11 +1,6 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import Webcam from "react-webcam";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useDropzone } from "react-dropzone";
-import { z } from "zod";
-import { Input } from "@/components/ui/input";
+import SpinnerAI2 from "@/components/spinner-ai-2";
+import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
@@ -14,12 +9,16 @@ import {
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
-import { UploadCloudIcon } from "lucide-react";
+import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { FilesetResolver, ObjectDetector } from "@mediapipe/tasks-vision";
+import { UploadCloudIcon } from "lucide-react";
 import Image from "next/image";
-import SpinnerAI2 from "@/components/spinner-ai-2";
-import { ObjectDetector, FilesetResolver } from "@mediapipe/tasks-vision";
+import React, { useEffect, useState } from "react";
+import { useDropzone } from "react-dropzone";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
 import ObjectDetection from "./object-detection";
 
 const formSchema = z.object({
@@ -258,7 +257,10 @@ export default function Page() {
         )} */}
         {/* {JSON.stringify(result)} */}
         {result && preview && (
+          <div className="flex items-center justify-center border-2 rounded-lg p-2">
           <ObjectDetection imageSrc={preview as string} detections={result} />
+          </div>
+
         )}
       </div>
     </div>
