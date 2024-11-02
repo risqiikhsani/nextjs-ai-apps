@@ -25,6 +25,7 @@ import { useForm } from "react-hook-form";
 import { z } from "zod";
 
 import SpinnerAI2 from "@/components/spinner-ai-2";
+import { text_to_speech_models } from "@/const/models";
 
 const FormSchema = z.object({
   text: z
@@ -119,13 +120,11 @@ export default function Page() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="espnet/kan-bayashi_ljspeech_vits">
-                      espnet/kan-bayashi_ljspeech_vits
-                    </SelectItem>
-                    <SelectItem value="myshell-ai/MeloTTS-English">
-                      myshell-ai/MeloTTS-English
-                    </SelectItem>
-                    <SelectItem value="microsoft/speecht5_tts">microsoft/speecht5_tts</SelectItem>
+                    {text_to_speech_models.map((model,i) => (
+                      <SelectItem key={i} value={model.model}>
+                        {model.model}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormDescription>

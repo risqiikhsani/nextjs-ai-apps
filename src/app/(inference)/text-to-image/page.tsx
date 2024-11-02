@@ -26,6 +26,7 @@ import { z } from "zod";
 
 import Image from "next/image";
 import SpinnerAI2 from "@/components/spinner-ai-2";
+import { text_to_image_models } from "@/const/models";
 
 const FormSchema = z.object({
   text: z
@@ -103,7 +104,7 @@ export default function Page() {
   }
 
   return (
-    <div className="py-10 grid grid-cols-2 gap-4 border-2 rounded-xl p-4">
+    <div className="py-10 grid md:grid-cols-2 gap-4 border-2 rounded-xl p-4">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -125,12 +126,11 @@ export default function Page() {
                     </SelectTrigger>
                   </FormControl>
                   <SelectContent>
-                    <SelectItem value="black-forest-labs/FLUX.1-dev">black-forest-labs/FLUX.1-dev</SelectItem>
-                    <SelectItem value="aleksa-codes/flux-ghibsky-illustration">aleksa-codes/flux-ghibsky-illustration</SelectItem>
-                    <SelectItem value="stabilityai/stable-diffusion-xl-base-1.0">
-                      stabilityai/stable-diffusion-xl-base-1.0
-                    </SelectItem>
-                    <SelectItem value="stabilityai/stable-diffusion-3.5-large">stabilityai/stable-diffusion-3.5-large</SelectItem>
+                    {text_to_image_models.map((model,i) => (
+                      <SelectItem key={i} value={model.model}>
+                        {model.model}
+                      </SelectItem>
+                    ))}
                   </SelectContent>
                 </Select>
                 <FormDescription>
@@ -163,7 +163,7 @@ export default function Page() {
         </form>
       </Form>
 
-      <div className="mx-6">
+      <div>
       <h3 className="text-lg font-semibold">Image Result</h3>
       {isLoading && <p>{`Wait, generating image using model ${form.getValues("model")} is running...`}</p>}
       {isLoading && <SpinnerAI2/>}

@@ -103,7 +103,7 @@ export default function Page() {
   }
 
   return (
-    <div className="py-10 grid grid-cols-2 gap-4 border-2 rounded-xl p-4">
+    <div className="py-10 grid md:grid-cols-2 gap-4 border-2 rounded-xl p-4">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
           <FormField
@@ -134,7 +134,7 @@ export default function Page() {
         </form>
       </Form>
 
-      <div className="mt-8">
+      <div>
         <h3 className="text-lg font-semibold mb-4">Transcription Result</h3>
         {isLoading && (
           <div className="flex items-center gap-2">

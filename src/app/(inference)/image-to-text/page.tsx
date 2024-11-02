@@ -127,7 +127,7 @@ export default function Page() {
   }
 
   return (
-    <div className="py-10 grid grid-cols-2 gap-4 border-2 rounded-xl p-4">
+    <div className="py-10 grid md:grid-cols-2 gap-4 border-2 rounded-xl p-4">
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <FormField
@@ -196,7 +196,7 @@ export default function Page() {
       {/* <Button className="my-2" onClick={clearImage}>
         Clear image
       </Button> */}
-      <div className="mx-6">
+      <div>
       <h3 className="text-lg font-semibold">Text result</h3>
       {isLoading && <p>Wait, Progress to generate text from image ...</p>}
       {isLoading && <SpinnerAI2/>}

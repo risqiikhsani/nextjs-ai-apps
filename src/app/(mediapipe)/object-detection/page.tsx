@@ -176,7 +176,7 @@ export default function Page() {
   }
 
   return (
-    <div className="py-10 grid grid-cols-2 gap-4 border-2 rounded-xl p-4">
+    <div className="py-10 grid md:grid-cols-2 gap-4 border-2 rounded-xl p-4">
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
@@ -238,7 +238,7 @@ export default function Page() {
           </Button>
         </form>
       </Form>
-      <div className="mx-6">
+      <div>
         <h3 className="text-lg font-semibold">Classification Results</h3>
         {isLoading && (
           <div className="space-y-2">

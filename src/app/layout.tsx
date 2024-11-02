@@ -33,7 +33,7 @@ export default function RootLayout({
       >
         <SidebarProvider>
           <AppSidebar />
-          <main className="container mx-auto flex">
+          <main className="container mx-auto">
             <SidebarTrigger />
             {children}
             <Toaster />

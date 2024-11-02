@@ -84,7 +84,7 @@ export default function Page() {
   }
 
   return (
-    <div className="py-10 grid grid-cols-2 gap-4 border-2 rounded-xl p-4">
+    <div className="py-10 grid md:grid-cols-2 gap-4 border-2 rounded-xl p-4">
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="w-2/3 space-y-6">
         <FormField
@@ -112,8 +112,11 @@ export default function Page() {
         </Button>
       </form>
     </Form>
+    <div>
     <h3 className="text-lg font-semibold">Summarization Result</h3>
     {result}
+    </div>
+    
     </div>
 
   )

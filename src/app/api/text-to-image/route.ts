@@ -9,8 +9,11 @@ const inference = new HfInference(HF_TOKEN);
 async function getImage({ model,text }: { model:string,text: string }) {
   try {
     const out = await inference.textToImage({
-      model: model || "stabilityai/stable-diffusion-xl-base-1.0",
-      inputs: text,
+      model: model || "black-forest-labs/FLUX.1-schnell",
+      inputs: text,parameters:{
+        height:512,
+        width:512,
+      }
     });
     console.log(out);
     return out;

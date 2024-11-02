@@ -1,3 +1,4 @@
+"use client"
 
 import {
   Sidebar,
@@ -11,14 +12,42 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { audio_items, text_items, visual_items } from "@/const/links"
+import { LinkType } from "@/types/links";
 import Link from "next/link"
+import { usePathname } from "next/navigation"
 
 export function AppSidebar() {
+  const pathname = usePathname();
+
+  const MenuItemLink = ({ item }:{item:LinkType}) => {
+    const isActive = pathname === item.url;
+    
+    return (
+      <SidebarMenuItem key={item.title}>
+        <SidebarMenuButton asChild>
+          <Link 
+            href={item.url}
+            className={`flex items-center gap-2 w-full p-2 rounded-md transition-colors
+              ${isActive 
+                ? 'bg-cyan-300 text-cyan-900' 
+                : 'hover:bg-cyan-100'
+              }`}
+          >
+            <item.icon className={`${isActive ? 'text-cyan-700' : 'text-cyan-500'}`}/>
+            <span>{item.title}</span>
+          </Link>
+        </SidebarMenuButton>
+      </SidebarMenuItem>
+    );
+  };
+
   return (
     <Sidebar>
       <SidebarHeader>
         <SidebarMenuButton asChild>
-          <Link href="/">Hypernova AI</Link>
+          <Link href="/" className="hover:text-cyan-600 transition-colors">
+            Hypernova AI
+          </Link>
         </SidebarMenuButton>
       </SidebarHeader>
       <SidebarContent>
@@ -27,14 +56,7 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {text_items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon className="text-cyan-500"/>
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <MenuItemLink key={item.title} item={item} />
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
@@ -44,14 +66,7 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {visual_items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon className="text-cyan-500"/>
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <MenuItemLink key={item.title} item={item} />
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
@@ -61,19 +76,14 @@ export function AppSidebar() {
           <SidebarGroupContent>
             <SidebarMenu>
               {audio_items.map((item) => (
-                <SidebarMenuItem key={item.title}>
-                  <SidebarMenuButton asChild>
-                    <a href={item.url}>
-                      <item.icon className="text-cyan-500"/>
-                      <span>{item.title}</span>
-                    </a>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
+                <MenuItemLink key={item.title} item={item} />
               ))}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
     </Sidebar>
-  )
+  );
 }
+
+export default AppSidebar;
