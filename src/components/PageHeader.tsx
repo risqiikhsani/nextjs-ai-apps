@@ -16,7 +16,7 @@ function PageHeader() {
   const title = pageTitle ? capitalize(pageTitle.replace(/-/g, ' ')) : 'Home';
 
   return (
-    <div>
+    <div className='ml-2'>
       {/* Breadcrumbs */}
       <nav className="breadcrumb">
         {/* Render breadcrumb here */}

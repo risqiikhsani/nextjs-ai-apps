@@ -83,7 +83,7 @@ export const visual_items = [
     image: "/icons/gpu.png",
     type:"mediapipe",
     description:
-      "Identify objects, scenes, and other elements within images, providing detailed classification to enrich your data insights.",
+      "Detect, identify objects, scenes, and other elements within images,.",
   },
   {
     title: "Object Detection Video",
@@ -92,7 +92,7 @@ export const visual_items = [
     image: "/icons/gpu.png",
     type:"mediapipe",
     description:
-      "Identify objects, scenes, and other elements within images, providing detailed classification to enrich your data insights.",
+      "Detect, identify objects, scenes, and other elements within video.",
   },
   {
     title: "Image Illustrator",

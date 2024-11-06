@@ -42,7 +42,7 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar>
+    <Sidebar className="pt-16">
       <SidebarHeader>
         <SidebarMenuButton asChild>
           <Link href="/" className="hover:text-cyan-600 transition-colors">

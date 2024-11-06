@@ -1,9 +1,11 @@
+import { AppSidebar } from "@/components/app-sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { Toaster } from "@/components/ui/toaster";
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
-import { AppSidebar } from "@/components/app-sidebar";
+import AppBar from "@/components/app-bar";
+import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -27,18 +29,26 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-r from-slate-50 to-slate-300 dark:from-slate-900 dark:to-slate-950`}
       >
-        <SidebarProvider>
-          <AppSidebar />
-          <main className="container mx-auto">
-            <SidebarTrigger />
-            {children}
-            <Toaster />
-          </main>
-        </SidebarProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <SidebarProvider>
+            <AppBar />
+            <AppSidebar />
+            <main className="md:container md:mx-auto pt-16 w-full min-h-screen">
+              {/* <SidebarTrigger /> */}
+              {children}
+              <Toaster />
+            </main>
+          </SidebarProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
