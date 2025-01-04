@@ -35,8 +35,7 @@ export async function POST(req: Request) {
     // Add a system message to ensure multilingual support
     [
       "system",
-      `You are a helpful AI assistant named {name}. You do conversation with users in their language. 
-      Answer user message in language of user's language.`    
+      `You are a helpful AI assistant named {name}.`    
     ],
     ...messages.map(
       (message: { role: string; content: string | BaseMessageFields }) =>
