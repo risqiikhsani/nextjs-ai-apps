@@ -19,6 +19,24 @@ export const genai_items = [
     description:
       "Example of Generative AI",
   },
+  {
+    title: "Grammar Fixer",
+    url: "/dashboard/grammar-fixer",
+    icon: Cpu,
+    image: "/icons/keyboard.png",
+    type:"Generative AI",
+    description:
+      "Example of Generative AI",
+  },
+  {
+    title: "Lover AI",
+    url: "/dashboard/lover",
+    icon: Cpu,
+    image: "/icons/keyboard.png",
+    type:"Generative AI",
+    description:
+      "Example of Generative AI",
+  },
 ]
 
 export const text_items = [

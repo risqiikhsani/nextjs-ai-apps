@@ -2,7 +2,7 @@ import { BedrockChat } from "@langchain/community/chat_models/bedrock";
 import {
   AIMessage,
   BaseMessageFields,
-  HumanMessage
+  HumanMessage,
 } from "@langchain/core/messages";
 import { StringOutputParser } from "@langchain/core/output_parsers";
 import { ChatPromptTemplate } from "@langchain/core/prompts";
@@ -22,19 +22,29 @@ export const maxDuration = 60;
 
 export async function POST(req: Request) {
   const data = await req.json();
-  console.log(data)
-  const messages = data.messages
+  console.log(data);
+  const messages = data.messages;
+  const persona_name = data.persona_name;
+  const persona_gender = data.persona_gender;
+  const persona_personality = data.persona_personality;
+  const persona_hobbies = data.persona_hobbies;
+  const persona_preferences = data.persona_preferences;
+  const user_name = data.user_name;
   const parser = new StringOutputParser();
-  // const systemTemplate =
-  // "You are a helpful AI assistant named {name} capable of communicating in any language. Detect and use the language of the user's input.";
-
-  // Prepare messages, converting to LangChain message types
 
   const processedMessages = [
     // Add a system message to ensure multilingual support
     [
       "system",
-      `You are a helpful AI assistant named {name}.`    
+      `
+      You are now taking on the persona of {persona_name}, a {persona_gender} with the following traits:
+        - Personality: {persona_personality}
+        - Hobbies: {persona_hobbies}
+        - Preferences: {persona_preferences}
+        You will respond as if you are this person.
+        The person's name you talk to is {user_name}.
+        Respond to the user's questions and comments in a manner that is appropriate for this person.
+    `,
     ],
     ...messages.map(
       (message: { role: string; content: string | BaseMessageFields }) =>
@@ -48,7 +58,12 @@ export async function POST(req: Request) {
 
   // Stream the response
   const stream = await chain.stream({
-    name:"Hypernova"
+    persona_name,
+    persona_gender,
+    persona_personality,
+    persona_hobbies,
+    persona_preferences,
+    user_name,
   });
 
   return LangChainAdapter.toDataStreamResponse(stream);

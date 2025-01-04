@@ -42,15 +42,15 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar className="pt-16 bg-blue-300 dark:bg-slate-900">
-      <SidebarHeader className="bg-blue-300 dark:bg-slate-900">
+    <Sidebar className="pt-16 bg-slate-50 dark:bg-slate-900">
+      <SidebarHeader className="bg-slate-50 dark:bg-slate-900">
         <SidebarMenuButton asChild>
           <Link href="/" className="hover:text-cyan-600 transition-colors">
             Hypernova AI
           </Link>
         </SidebarMenuButton>
       </SidebarHeader>
-      <SidebarContent className="bg-blue-300 dark:bg-slate-900">
+      <SidebarContent className="bg-slate-50 dark:bg-slate-900">
       <SidebarGroup>
           <SidebarGroupLabel>Generative AI Examples</SidebarGroupLabel>
           <SidebarGroupContent>
