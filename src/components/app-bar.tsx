@@ -1,11 +1,13 @@
 import React from 'react'
-import { SidebarTrigger } from './ui/sidebar'
+
 import { ModeToggle } from './mode-toggle'
+import Link from 'next/link'
+import Image from 'next/image'
 
 export default function AppBar() {
   return (
-    <nav className="fixed w-full p-4 h-16 z-50 shadow-lg opacity-50 flex gap-2 dark:bg-slate-800 bg-slate-100">
-        <SidebarTrigger/>
+    <nav className="fixed z-50 top-0 w-full flex gap-2 justify-between p-2 backdrop-blur-md ">
+        <Link href="/"><Image src="/icons/keyboard.png" width={50} height={50} alt='logo'/></Link>
         <div className='flex-1'></div>
         <ModeToggle/>
     </nav>

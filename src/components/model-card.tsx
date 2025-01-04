@@ -14,18 +14,18 @@ import Link from "next/link";
 
 export default function ModelCard({ item }: { item: LinkType }) {
   return (
-    <Card className="flex flex-col w-full transform transition duration-300 hover:scale-105 border-2 border-transparent hover:border-blue-500 hover:shadow-lg rounded-lg">
+    <Card className="flex flex-col w-full transform transition duration-300 hover:scale-105 shadow-lg min-h-[500px] bg-transparent border-0">
       <CardHeader>
-        <div className="flex flex-col md:flex-row gap-2">
-          <CardTitle className="text-xl font-semibold text-blue-700">
+        <div className="flex flex-col items-center text-center">
+          <CardTitle className="text-xl font-semibold">
             {item.title}
           </CardTitle>
-          <Badge variant="outline" className="bg-orange-500 rounded-2xl">
+          <Badge variant="outline" className="">
             {item.type}
           </Badge>
         </div>
 
-        <CardDescription>
+        <CardDescription className=" text-center">
           {item.description}
         </CardDescription>
       </CardHeader>

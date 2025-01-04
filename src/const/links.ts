@@ -1,9 +1,30 @@
 import { Cpu } from "lucide-react";
 
+export const genai_items = [
+  {
+    title: "Generate Quiz",
+    url: "/dashboard/generate-quiz",
+    icon: Cpu,
+    image: "/icons/keyboard.png",
+    type:"Generative AI",
+    description:
+      "Example of Generative AI",
+  },
+  {
+    title: "Chat",
+    url: "/dashboard/chat-with-langchain",
+    icon: Cpu,
+    image: "/icons/keyboard.png",
+    type:"Generative AI",
+    description:
+      "Example of Generative AI",
+  },
+]
+
 export const text_items = [
   {
     title: "Chat Basic",
-    url: "/chat",
+    url: "/dashboard/chat",
     icon: Cpu,
     image: "/icons/keyboard.png",
     type:"inference",
@@ -12,7 +33,7 @@ export const text_items = [
   },
   {
     title: "Chat Conversation",
-    url: "/chat-conv",
+    url: "/dashboard/chat-conv",
     icon: Cpu,
     image: "/icons/keyboard.png",
     type:"inference",
@@ -21,7 +42,7 @@ export const text_items = [
   },
   {
     title: "Text Summarization",
-    url: "/summarization",
+    url: "/dashboard/summarization",
     icon: Cpu,
     image: "/icons/keyboard.png",
     type:"inference",
@@ -30,7 +51,7 @@ export const text_items = [
   },
   {
     title: "Text Classification",
-    url: "/text-classification",
+    url: "/dashboard/text-classification",
     icon: Cpu,
     image: "/icons/keyboard.png",
     type:"inference",
@@ -42,7 +63,7 @@ export const text_items = [
 export const visual_items = [
   {
     title: "Image Generator",
-    url: "/text-to-image",
+    url: "/dashboard/text-to-image",
     icon: Cpu,
     image: "/icons/gpu.png",
     type:"inference",
@@ -51,7 +72,7 @@ export const visual_items = [
   },
   {
     title: "Image To Text",
-    url: "/image-to-text",
+    url: "/dashboard/image-to-text",
     icon: Cpu,
     image: "/icons/gpu.png",
     type:"inference",
@@ -60,7 +81,7 @@ export const visual_items = [
   },
   {
     title: "Image Classification",
-    url: "/image-classification",
+    url: "/dashboard/image-classification",
     icon: Cpu,
     image: "/icons/gpu.png",
     type:"inference",
@@ -69,7 +90,7 @@ export const visual_items = [
   },
   {
     title: "Image Classification 2",
-    url: "/image-classification-2",
+    url: "/dashboard/image-classification-2",
     icon: Cpu,
     image: "/icons/gpu.png",
     type:"mediapipe",
@@ -78,7 +99,7 @@ export const visual_items = [
   },
   {
     title: "Object Detection Image",
-    url: "/object-detection",
+    url: "/dashboard/object-detec>tion",
     icon: Cpu,
     image: "/icons/gpu.png",
     type:"mediapipe",
@@ -87,7 +108,7 @@ export const visual_items = [
   },
   {
     title: "Object Detection Video",
-    url: "/object-detection-video",
+    url: "/dashboard/object-detection-video",
     icon: Cpu,
     image: "/icons/gpu.png",
     type:"mediapipe",
@@ -96,7 +117,7 @@ export const visual_items = [
   },
   {
     title: "Image Illustrator",
-    url: "/image-to-image",
+    url: "/dashboard/image-to-image",
     icon: Cpu,
     image: "/icons/gpu.png",
     type:"inference",
@@ -108,7 +129,7 @@ export const visual_items = [
 export const audio_items = [
   {
     title: "Text to Speech",
-    url: "/text-to-speech",
+    url: "/dashboard/text-to-speech",
     icon: Cpu,
     image: "/icons/voice.png",
     type:"inference",
@@ -116,7 +137,7 @@ export const audio_items = [
   },
   {
     title: "Speech to Text",
-    url: "/speech-to-text",
+    url: "/dashboard/speech-to-text",
     icon: Cpu,
     image: "/icons/voice.png",
     type:"inference",

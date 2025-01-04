@@ -11,7 +11,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
-import { audio_items, text_items, visual_items } from "@/const/links"
+import { genai_items,audio_items, text_items, visual_items } from "@/const/links"
 import { LinkType } from "@/types/links";
 import Link from "next/link"
 import { usePathname } from "next/navigation"
@@ -42,15 +42,25 @@ export function AppSidebar() {
   };
 
   return (
-    <Sidebar className="pt-16">
-      <SidebarHeader>
+    <Sidebar className="pt-16 bg-blue-300 dark:bg-slate-900">
+      <SidebarHeader className="bg-blue-300 dark:bg-slate-900">
         <SidebarMenuButton asChild>
           <Link href="/" className="hover:text-cyan-600 transition-colors">
             Hypernova AI
           </Link>
         </SidebarMenuButton>
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="bg-blue-300 dark:bg-slate-900">
+      <SidebarGroup>
+          <SidebarGroupLabel>Generative AI Examples</SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>
+              {genai_items.map((item) => (
+                <MenuItemLink key={item.title} item={item} />
+              ))}
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
         <SidebarGroup>
           <SidebarGroupLabel>Natural Language Processing</SidebarGroupLabel>
           <SidebarGroupContent>

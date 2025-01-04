@@ -73,27 +73,20 @@ export default function Page() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     console.log(values);
+
+    const formData = new FormData()
+    formData.append("image",values.image)
+
     toast({
       title: "Image Uploaded",
       description: `Image uploaded successfully 🎉 ${values.image.name}`,
     });
     try {
       setIsLoading(true);
-      // Convert image file to base64
-      const imageBase64 = await new Promise<string>((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onloadend = () => resolve(reader.result as string);
-        reader.onerror = () =>
-          reject(new Error("Failed to convert image to base64"));
-        reader.readAsDataURL(values.image);
-      });
 
       const response = await fetch("/api/image-classification", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ image: imageBase64.split(",")[1] }), // Remove the data URL prefix
+        body: formData
       });
 
       if (!response.ok) {
@@ -101,7 +94,7 @@ export default function Page() {
       }
 
       const data = await response.json();
-      setResult(data.imageResponse);
+      setResult(data.text);
 
       toast({
         title: "Image Classification",

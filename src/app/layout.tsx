@@ -1,11 +1,9 @@
-import { AppSidebar } from "@/components/app-sidebar";
-import { SidebarProvider } from "@/components/ui/sidebar";
+import { ThemeProvider } from "@/components/theme-provider";
 import { Toaster } from "@/components/ui/toaster";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
 import AppBar from "@/components/app-bar";
-import { ThemeProvider } from "@/components/theme-provider";
 
 const geistSans = localFont({
   src: "./fonts/GeistVF.woff",
@@ -47,7 +45,7 @@ export default function RootLayout({
         />
       </Head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-r from-slate-50 to-slate-300 dark:from-slate-900 dark:to-slate-950`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <ThemeProvider
           attribute="class"
@@ -55,15 +53,10 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <SidebarProvider>
-            <AppBar />
-            <AppSidebar />
-            <main className="md:container md:mx-auto pt-16 w-full min-h-screen">
-              {/* <SidebarTrigger /> */}
-              {children}
-              <Toaster />
-            </main>
-          </SidebarProvider>
+          <AppBar/>
+          <div className="min-h-screen pt-20 bg-gradient-to-bl from-[#ffe4e6]  to-[#ccfbf1] dark:bg-gradient-to-r dark:from-[#0f172a]  dark:to-[#334155]">
+            {children}</div>
+          <Toaster />
         </ThemeProvider>
       </body>
     </html>

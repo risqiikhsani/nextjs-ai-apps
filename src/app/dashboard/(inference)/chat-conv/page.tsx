@@ -1,7 +1,7 @@
 "use client";
 
 import Loader from "@/components/loader";
-import MarkdownDisplay from "@/components/MarkdownDisplay";
+import { Markdown } from "@/components/markdown";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -136,7 +136,8 @@ export default function Page() {
           >
             
             <h1 className="font-bold">{message.role}</h1>
-            <MarkdownDisplay text={message.content} />
+            {/* <MarkdownDisplay text={message.content} /> */}
+            <Markdown>{message.content}</Markdown>
           </div>
         ))}
 

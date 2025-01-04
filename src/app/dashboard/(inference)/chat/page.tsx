@@ -1,9 +1,7 @@
 "use client"
 
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { useToast } from "@/hooks/use-toast"
+import { Markdown } from "@/components/markdown"
+import SpinnerAI2 from "@/components/spinner-ai-2"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -14,9 +12,11 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Textarea } from "@/components/ui/textarea"
+import { useToast } from "@/hooks/use-toast"
+import { zodResolver } from "@hookform/resolvers/zod"
 import { useState } from "react"
-import MarkdownDisplay from "@/components/MarkdownDisplay"
-import SpinnerAI2 from "@/components/spinner-ai-2"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 
 const FormSchema = z.object({
   message: z
@@ -120,7 +120,7 @@ export default function Page() {
       {isLoading && <p>Wait, Progress to generate text ...</p>}
       {isLoading && <SpinnerAI2/>}
       {/* Render result as progress bars */}
-      <MarkdownDisplay text={result}/>
+      <Markdown>{result}</Markdown>
       </div>
     </div>
 

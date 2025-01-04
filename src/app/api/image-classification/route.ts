@@ -23,21 +23,21 @@ async function getImageClassification({ model, image }: { model?: string; image:
 export async function POST(req: Request) {
   try {
     // Parse the request body
-    const body = await req.json();
-    const { model, image } = body;
+    const formData = await req.formData();
+    const image = formData.get("image") as File
 
     if (!image) {
       return NextResponse.json({ error: "Image is required" }, { status: 400 });
     }
 
-    // Assuming the image is sent as a base64 string, decode it
-    const imageBuffer = Buffer.from(image, "base64");
+    const bytes = await image.arrayBuffer();
+    const buffer = Buffer.from(bytes);
 
     // Get the image classification result
-    const imageResponse = await getImageClassification({ model, image: imageBuffer });
+    const text = await getImageClassification({ image: buffer });
 
     // Return the classification result
-    return NextResponse.json({ imageResponse });
+    return NextResponse.json({ text });
   } catch (error) {
     console.error("API route error:", error);
     return NextResponse.json(
