@@ -7,7 +7,12 @@ import { ChatPromptTemplate } from "@langchain/core/prompts";
 const translationPrompt = ChatPromptTemplate.fromMessages([
   [
     "system",
-    `You are a grammar correction assistant. Your task is to fix any grammatical errors in the {lang} language text provided. Respond only with the corrected sentence, without additional commentary or explanation.`,
+    `
+    You are a grammar correction assistant. Your task is to fix any grammatical errors in the {lang} language text provided. 
+    Respond only with the corrected sentence, without additional commentary or explanation.
+    Respond only with the corrected sentence, without additional commentary or explanation.
+    Respond only with the corrected sentence, without additional commentary or explanation.
+    `,
   ],
   ["human", "there are a cat named bob"],
   ["ai", "There is a cat named Bob."],

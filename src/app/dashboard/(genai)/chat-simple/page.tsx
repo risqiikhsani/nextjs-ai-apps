@@ -2,6 +2,7 @@
 
 import Loader from "@/components/loader";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { useChat } from "ai/react";
@@ -46,11 +47,11 @@ export default function Chat() {
   }, [messages]);
 
   return (
-    <div className="flex flex-col h-screen">
+    <Card className="flex flex-col">
       {/* Messages */}
       <div className="flex-grow overflow-y-auto p-4 space-y-4">
         {error && (
-          <div className="text-red-500 bg-red-100 p-3 rounded-md">
+          <div className="text-red-500  p-3 rounded-md">
             <p>An error occurred. Please try again.</p>
             <Button variant="outline" onClick={() => reload}>
               Retry
@@ -63,8 +64,8 @@ export default function Chat() {
             key={m.id}
             className={`p-3 rounded-md ${
               m.role === "user"
-                ? "bg-blue-100 text-blue-800 self-end"
-                : "bg-gray-100 text-gray-800 self-start"
+                ? " self-end"
+                : " self-start"
             }`}
           >
             <p className="font-medium">{m.role === "user" ? "You:" : "AI:"}</p>
@@ -90,7 +91,7 @@ export default function Chat() {
       </div>
 
       {/* Input */}
-      <div className="p-4 border-t bg-white sticky bottom-0">
+      <div className="p-4 border-t sticky bottom-0">
         <form onSubmit={handleSubmit} className="flex items-center space-x-2">
           <Input
             className="flex-1 border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
@@ -100,12 +101,12 @@ export default function Chat() {
           />
           <Button
             type="submit"
-            className="bg-blue-500 text-white hover:bg-blue-600"
+            className=""
           >
             Send
           </Button>
         </form>
       </div>
-    </div>
+    </Card>
   );
 }

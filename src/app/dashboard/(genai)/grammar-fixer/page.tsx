@@ -13,46 +13,46 @@ import {
 } from "@/components/ui/select";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 
-// // Function to highlight differences
-// function highlightChanges(input: string, completion: string) {
-//   const inputWords = input.split(" ");
-//   const completionWords = completion.split(" ");
-//   const highlightedResult = [];
+// Function to highlight differences
+function highlightChanges(input: string, completion: string) {
+  const inputWords = input.split(" ");
+  const completionWords = completion.split(" ");
+  const highlightedResult = [];
 
-//   // Iterate through the words and highlight changes
-//   for (
-//     let i = 0;
-//     i < Math.max(inputWords.length, completionWords.length);
-//     i++
-//   ) {
-//     if (inputWords[i] === completionWords[i]) {
-//       // If words are the same, show them as normal
-//       highlightedResult.push(
-//         <span key={i} className="text-gray-700">
-//           {completionWords[i]}{" "}
-//         </span>
-//       );
-//     } else {
-//       // Highlight differences: red for input, green for completion
-//       if (inputWords[i]) {
-//         highlightedResult.push(
-//           <span key={`input-${i}`} className="text-red-500 line-through">
-//             {inputWords[i]}{" "}
-//           </span>
-//         );
-//       }
-//       if (completionWords[i]) {
-//         highlightedResult.push(
-//           <span key={`completion-${i}`} className="text-green-500">
-//             {completionWords[i]}{" "}
-//           </span>
-//         );
-//       }
-//     }
-//   }
+  // Iterate through the words and highlight changes
+  for (
+    let i = 0;
+    i < Math.max(inputWords.length, completionWords.length);
+    i++
+  ) {
+    if (inputWords[i] === completionWords[i]) {
+      // If words are the same, show them as normal
+      highlightedResult.push(
+        <span key={i} className="text-gray-700">
+          {completionWords[i]}{" "}
+        </span>
+      );
+    } else {
+      // Highlight differences: red for input, green for completion
+      if (inputWords[i]) {
+        highlightedResult.push(
+          <span key={`input-${i}`} className="text-red-500 line-through">
+            {inputWords[i]}{" "}
+          </span>
+        );
+      }
+      if (completionWords[i]) {
+        highlightedResult.push(
+          <span key={`completion-${i}`} className="text-green-500">
+            {completionWords[i]}{" "}
+          </span>
+        );
+      }
+    }
+  }
 
-//   return highlightedResult;
-// }
+  return highlightedResult;
+}
 
 export default function Chat() {
   const [language, setLanguage] = useState("english");
@@ -65,11 +65,7 @@ export default function Chat() {
     });
 
   return (
-    <div className="flex flex-col w-full max-w-md py-24 mx-auto stretch gap-6">
-      <h4 className="pb-4 text-xl font-bold text-gray-900 md:text-xl">
-        Grammar Fixer
-      </h4>
-
+    <Card className="p-6 flex flex-col md:flex-row gap-6">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4">
         <Select onValueChange={(value) => setLanguage(value)} value={language}>
           <SelectTrigger className="w-[180px]">
@@ -95,40 +91,31 @@ export default function Chat() {
           Submit
         </Button>
       </form>
-      {error && (
-        <div className="fixed top-0 left-0 w-full p-4 text-center text-white bg-red-500">
-          {error.message}
-        </div>
-      )}
+
       <Card>
         <CardHeader>
           <CardTitle>Result</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="mb-4">
-            <h5 className="font-semibold text-red-600">Input (Incorrect)</h5>
-            <p className="whitespace-pre-wrap">
-              {input.split(" ").map((word, index) => (
-                <span key={index} className="text-red-600">
-                  {word}{" "}
-                </span>
-              ))}
-            </p>
-          </div>
-          <div>
-            <h5 className="font-semibold text-green-600">Output (Corrected)</h5>
-            <p className="whitespace-pre-wrap">
-              {completion
-                ? completion.split(" ").map((word, index) => (
-                    <span key={index} className="text-green-600">
-                      {word}{" "}
-                    </span>
-                  ))
-                : "Output will be shown here"}
-            </p>
-          </div>
+        <CardContent className="flex flex-wrap gap-1 flex-col">
+          {error && (
+            <div className="fixed top-0 left-0 w-full p-4 text-center text-white bg-red-500">
+              {error.message}
+            </div>
+          )}
+          <p>
+            {completion
+              ? highlightChanges(input, completion)
+              : "Output will be shown here"}
+          </p>
+
+          {completion && (
+            <div>
+              <h1 className="font-bold text-md">Corrected sentence</h1>
+              <p>{completion}</p>
+            </div>
+          )}
         </CardContent>
       </Card>
-    </div>
+    </Card>
   );
 }

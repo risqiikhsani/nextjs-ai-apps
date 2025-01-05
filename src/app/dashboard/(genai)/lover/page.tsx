@@ -27,7 +27,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { UploadCloudIcon } from "lucide-react";
+import { HeartIcon, UploadCloudIcon } from "lucide-react";
 import Image from "next/image";
 import { useCallback, useState } from "react";
 import { useDropzone } from "react-dropzone";
@@ -35,6 +35,33 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import * as z from "zod";
 import Chat, { PersonaType } from "./chats";
+
+const random_persona = [
+  {
+    persona_picture: "/images/woman1.webp",
+    persona_name: "Elena",
+    persona_gender: "female",
+    persona_personality: "Fun and Playful",
+    persona_hobbies: "Cooking and Cycling",
+    persona_preferences: "Nature Lover",
+  },
+  {
+    persona_picture: "/images/woman2.jpg",
+    persona_name: "Natasha",
+    persona_gender: "female",
+    persona_personality: "Fun and Playful",
+    persona_hobbies: "Swimming and Cooking",
+    persona_preferences: "Loves anything about foods",
+  },
+  {
+    persona_picture: "/images/woman3.webp",
+    persona_name: "Angeline",
+    persona_gender: "female",
+    persona_personality: "Fun and Playful",
+    persona_hobbies: "Reading book, cooking, baking cake.",
+    persona_preferences: "Loves family",
+  }
+]
 
 const formSchema = z.object({
   user_name: z.string(),
@@ -116,14 +143,12 @@ export default function Page() {
     }
   }
 
-
   return (
-    <div className="flex flex-col h-screen">
-      <div className="flex-1">
-        <h1>Love AI</h1>
+    <div className="flex flex-col md:flex-row gap-2 min-h-screen">
+      <div className="flex-1 flex flex-col gap-2 flex-grow">
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="">Set up your Lover AI</Button>
+            <Button className="text-red-500" variant="outline"><HeartIcon /><HeartIcon /><HeartIcon />Create your own Lover<HeartIcon /><HeartIcon /><HeartIcon /></Button>
           </DialogTrigger>
           <DialogContent
             className={"lg:max-w-screen-lg overflow-y-scroll max-h-screen"}
@@ -131,10 +156,10 @@ export default function Page() {
             <DialogHeader>
               <DialogTitle>Set up your lover AI</DialogTitle>
             </DialogHeader>
-            <Form {...form}>
+            <Form {...form} >
               <form
                 onSubmit={form.handleSubmit(onSubmit)}
-                className="space-y-8 max-w-3xl mx-auto py-10"
+                className="grid md:grid-cols-2 gap-4"
               >
                 <FormField
                   control={form.control}
@@ -161,18 +186,16 @@ export default function Page() {
                           fileRejections.length !== 0 && "text-destructive"
                         }`}
                       >
-                          
-                          <span
-                            className={
-                              form.formState.errors.persona_picture ||
-                              fileRejections.length !== 0
-                                ? "text-destructive"
-                                : ""
-                            }
-                          >
-                            Lover picture
-                          </span>
-                        
+                        <span
+                          className={
+                            form.formState.errors.persona_picture ||
+                            fileRejections.length !== 0
+                              ? "text-destructive"
+                              : ""
+                          }
+                        >
+                          Lover picture
+                        </span>
                       </FormLabel>
                       <FormControl>
                         <div
@@ -195,13 +218,10 @@ export default function Page() {
                           />
                           <Input {...getInputProps()} type="file" />
                           <FormDescription>
-                          {isDragActive ? (
-                            `Drop the image`
-                          ) : (
-                            `Click here or drag an image to upload it`
-                          )}
+                            {isDragActive
+                              ? `Drop the image`
+                              : `Click here or drag an image to upload it`}
                           </FormDescription>
-                          
                         </div>
                       </FormControl>
                       <FormMessage>
@@ -361,8 +381,37 @@ export default function Page() {
             </Form>
           </DialogContent>
         </Dialog>
+        <div className="flex flex-row justify-around">
+        {
+          random_persona.length > 0 && random_persona.map((a,i) => (
+            <div key={i} className="flex flex-col gap-1 p-2 items-center">
+              <Image
+                src={a.persona_picture}
+                alt="image"
+                width={100}
+                height={100}
+                className="object-cover object-top w-20 h-20 rounded-md"
+              />
+              <p>{a.persona_name}</p>
+              <Button size="sm" onClick={() => {
+                setLove({
+                  name: a.persona_name,
+                  picture: a.persona_picture,
+                  gender: a.persona_gender,
+                  personality: a.persona_personality,
+                  hobbies: a.persona_hobbies,
+                  preferences: a.persona_preferences,
+                })
+              }}>Choose</Button>
+            </div>
+          ))
+        }
+        </div>
       </div>
-      <Chat user_name={userName} persona={love} />
+      <div className="flex-1">
+      {love.name && <Chat user_name={userName} persona={love} />}
+      </div>
+
     </div>
   );
 }

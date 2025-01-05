@@ -8,6 +8,8 @@ import { useChat } from "ai/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { useEffect, useRef } from "react";
+import ChatMessage from "@/components/chat-message";
+import { Card } from "@/components/ui/card";
 
 export interface PersonaType {
   picture: string;
@@ -78,7 +80,7 @@ export default function Chat({
   }, [persona, setMessages]);
 
   return (
-    <div className="h-[600px]">
+    <Card className="p-4">
       <div className="p-6 flex flex-row gap-2 items-center justify-start">
         {persona.picture && (
           <Avatar>
@@ -104,26 +106,26 @@ export default function Chat({
             key={m.id}
             className={`p-3 rounded-md flex flex-col gap-2 ${
               m.role === "user"
-                ? "bg-blue-100 text-blue-800 self-end"
-                : "bg-gray-100 text-gray-800 self-start"
+                ? " self-end text-right"
+                : " self-start text-left"
             }`}
           >
             <div className="flex flex-row gap-2 items-center">
             {m.role === "assistant" && persona.picture && (
               <Avatar>
-                <AvatarImage src={persona.picture} />
+                <AvatarImage src={persona.picture}/>
                 <AvatarFallback>CN</AvatarFallback>
               </Avatar>
             )}
-            <p className="font-medium">{m.role === "user" ? "You" : `${persona.name}`}</p>
+            <p className="font-medium">{m.role === "user" ? "" : `${persona.name}`}</p>
             </div>
             
             {m.toolInvocations ? (
               <pre className="text-sm">
                 {JSON.stringify(m.toolInvocations, null, 2)}
-              </pre>
+              </pre>  
             ) : (
-              <p className="text-sm">{m.content}</p>
+              <ChatMessage message={m.content}/>
             )}
           </div>
         ))}
@@ -140,7 +142,7 @@ export default function Chat({
       </div>
 
       {/* Input */}
-      <div className="p-4 border-t bg-white sticky bottom-0">
+      <div className="p-4 border-t  sticky bottom-0">
         <form onSubmit={handleSubmit} className="flex items-center space-x-2">
           <Input
             className="flex-1 border-gray-300 rounded-lg shadow-sm focus:ring-blue-500 focus:border-blue-500"
@@ -150,12 +152,12 @@ export default function Chat({
           />
           <Button
             type="submit"
-            className="bg-blue-500 text-white hover:bg-blue-600"
+            className=""
           >
             Send
           </Button>
         </form>
       </div>
-    </div>
+      </Card>
   );
 }

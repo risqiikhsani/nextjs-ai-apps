@@ -32,6 +32,11 @@ export async function POST(req: Request) {
   const user_name = data.user_name;
   const parser = new StringOutputParser();
 
+  // Function to delay for a specified time
+  const delay = (ms: number) =>
+    new Promise((resolve) => setTimeout(resolve, ms));
+  await delay(4000);
+
   const processedMessages = [
     // Add a system message to ensure multilingual support
     [
@@ -44,6 +49,9 @@ export async function POST(req: Request) {
         You will respond as if you are this person.
         The person's name you talk to is {user_name}.
         Respond to the user's questions and comments in a manner that is appropriate for this person.
+        Keep responses concise and short like human.
+        Keep responses concise and short like human.
+        Keep responses concise and short like human.
     `,
     ],
     ...messages.map(
@@ -65,6 +73,8 @@ export async function POST(req: Request) {
     persona_preferences,
     user_name,
   });
+
+
 
   return LangChainAdapter.toDataStreamResponse(stream);
 }

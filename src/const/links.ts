@@ -12,7 +12,7 @@ export const genai_items = [
   },
   {
     title: "Chat",
-    url: "/dashboard/chat-with-langchain",
+    url: "/dashboard/chat-simple",
     icon: Cpu,
     image: "/icons/keyboard.png",
     type:"Generative AI",

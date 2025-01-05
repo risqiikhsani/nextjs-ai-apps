@@ -30,7 +30,10 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
 
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`
+          ${geistSans.variable} ${geistMono.variable} antialiased
+          from-[#ffe4e6]  to-[#ccfbf1] dark:bg-gradient-to-r dark:from-[#0f172a]  dark:to-[#334155]
+          `}
       >
         <ThemeProvider
           attribute="class"
@@ -39,8 +42,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <AppBar/>
-          <div className="min-h-screen pt-20 bg-gradient-to-bl from-[#ffe4e6]  to-[#ccfbf1] dark:bg-gradient-to-r dark:from-[#0f172a]  dark:to-[#334155]">
-            {children}</div>
+          <div className="pt-20 container mx-auto max-w-7xl ">
+            {children}
+          </div>
           <Toaster />
         </ThemeProvider>
       </body>
