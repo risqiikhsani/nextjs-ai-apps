@@ -37,6 +37,15 @@ export const genai_items = [
     description:
       "Example of Generative AI",
   },
+  {
+    title: "Resume Polisher AI",
+    url: "/dashboard/resume-polisher",
+    icon: Cpu,
+    image: "/icons/keyboard.png",
+    type:"Generative AI",
+    description:
+      "Example of Generative AI",
+  },
 ]
 
 export const text_items = [
