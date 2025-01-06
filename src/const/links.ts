@@ -20,6 +20,15 @@ export const genai_items = [
       "Example of Generative AI",
   },
   {
+    title: "Chat Multimodal",
+    url: "/dashboard/chat-multimodal",
+    icon: Cpu,
+    image: "/icons/keyboard.png",
+    type:"Generative AI",
+    description:
+      "Example of Generative AI",
+  },
+  {
     title: "Grammar Fixer",
     url: "/dashboard/grammar-fixer",
     icon: Cpu,
